@@ -28,7 +28,7 @@
             ```python
             X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=31)
             ```
-        - 훈련 데이터 내에서 추가로 테스트 데이터 분할
+        - 훈련 데이터 내에서 모델 검증용 데이터 분할
             ```python
             X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.25, random_state=31)
             ```
@@ -47,24 +47,36 @@
         - 표준화 방식
             - 특성 데이터의 평균을 0, 분산을 1로 조정
         - 이유
-            - 알고리듬은 상대적 척도(scale)에 민감하기 때문이다.
+            - 알고리듬은 **상대적 척도(scale)**에 민감하기 때문이다.
         - 표준화가 유용한 경우
-            - PE 헤더를 특성으로 사용하는 경우
+            - **PE 헤더**를 특성으로 사용하는 경우
                 - PE 헤더 : 매우 큰 값과 매우 작은 값을 가지고 있는 헤더
-        - 표준화 코드`
+        - 표준화 코드
             ```python
             from sklearn.preprocessing import StandardScaler
             X_standardized = StandardScaler().fit_transform(X)
             ```
     - 인스턴스화(Instantiate)
-        - 클래스 내의 객체의 변형을 정의하고 이름을 붙힌 장소(변수)에 인스턴스를 만드는 것
+        ```python
+        class Reversy():
+            def __init__(self):
+                self.log = []
+                self.turn = 0
+                self.mark = ['O','X']
+
+            def print_field(self):
+                print("x\\y")
+                
+        game = Reversy() # 인스턴스화
+        ```
+        - 클래스 내의 객체의 변형을 정의하고 이름을 붙힌 장소(변수)에 **인스턴스**를 만드는 것
             - 인스턴스(Instance)
                 - 실행중인 임의의 프로세스
                 - 클래스의 현재 생성된 오브젝트
     - 주성분 분석(PCA : Principal Component Analysis)
         - 특성을 분석해 더 적은 개수의 특성으로 환원하는 것
-            - 차원 축소(Dimension Reduction)를 하는 것
-                - 고차원의 데이터를 저차원의 데이터로 환원하는 것
+        - **차원 축소(Dimension Reduction)**를 하는 것
+            - 고차원의 데이터를 저차원의 데이터로 환원하는 것
         - 주성분 분석 코드
             ```python
             from sklearn.decomposition import PCA
@@ -72,7 +84,7 @@
             pca.fit_transform(X_standardized)
             ```
         - 차원 축소 유효성(effectivenss) 평가
-            - 분산을 몇 % 유지하면서 목표 특성의 개수로 줄일 수 있는지 확인
+            - **분산을 몇 % 유지**하면서 목표 특성의 개수로 줄일 수 있는지 확인
                 - 90%을 권장
             ```python
             Property_number = 40 # 목표 특성 개수
