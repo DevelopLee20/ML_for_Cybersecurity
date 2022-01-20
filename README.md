@@ -188,7 +188,7 @@
             df
             ```
         - 판다스에서 숫자가 아닌 값들은 NaN(Not a Number) 또는 category type가 됨
-            - 기본 값은 'NaN', astype()로 설정시 'category' 타입 사용 가능함
+            - 기본 값은 'NaN', astype()으로 설정시 'category' 타입 사용 가능함
     - plotly
         - 3D 그래프 출력 라이브러리
         - 3D 이미지를 출력해주기 때문에 이해하기 쉬움
@@ -208,4 +208,66 @@
         - PE : Portable Executable File Format
         - 다른 컴퓨터에 파일을 옮겨도 실행 할 수 있는 파일 확장자의 집합
             - 예시 : exe, dll, obj 등등
+
+#
+- [(2022-01-21) 3일차](./note/2022-01-21.ipynb)
+    - 라이브러리 사용 머신러닝
+        - XGBoost
+            - 악성코드 탐지에 유리
+            - 이진트리를 생성해 노드를 겹쳐 최종 값을 뽑아내는 형태
+            - 학습 코드
+                ```python
+                from xgboost import XGBClassifier
+                XGB_model_instance = XGBClassifier() # XGB 인스턴스
+                XGB_model_instance.fit(X_train, y_train)
+                ```
+        - Statsmodels
+            - 시계열 분석
+                - 시계열 : 연속적인 시간에서 얻은 값들로 이뤄진 수열
+                    - 예시 : 주식시장의 가격
+                - 사이버 공격(Cyber Attack)을 예측하는데 유용
+                - 학습 코드
+                    ```python
+                    from statsmodels.tsa.ar_model import AR
+                    model = AR(X_train)
+                    model_fit = model.fit()
+                    ```
+        - Moving Average
+            - 이동 평균 MA
+                - 학습 코드
+                    ```python
+                    from statsmodels.tsa.arima_model import ARMA
+                    model = ARMA(X_train, order=(0,1))
+                    model_fit = model.fit(disp=False)
+                    ```
+        - Simple Exponential Smoothing
+            - 단순 지수 평활 SES
+                - 학습 코드
+                    ```python
+                    from statsmodels.tsa.holtwinters import SimpleExpSmoothing
+                    model = SimpleExpSmoothing(time_series)
+                    model_fit = model.fit()
+                    ```
+        - 학습된 모델 매개변수 확인
+            ```python
+            model_fit.params
+            ```
+        - 학습된 모델 예측값 확인
+            ```python
+            model_fit.predict(100,100) # 100~100 데이터 예측
+            ```
+        - 학습된 모델 성능 평가
+            ```python
+            from sklearn.metrics import accuracy_score
+            y_test_pred = model_fit.predict(X_test)
+            accuracy_score(y_test, y_test_pred) # 테스트라벨, 예측라벨
+            ```
+    - plotly 라이브러리 그래프 출력
+        - 선형 그래프
+            ```python
+            import plotly.graph_objects as go
+            fig = go.Figure(data=go.Scatter(x=X_train, y=y_train))
+            fig.show()
+            ```
+
 ---
