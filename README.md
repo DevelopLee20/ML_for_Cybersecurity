@@ -270,4 +270,99 @@
             fig.show()
             ```
 
+#
+- [(2022-01-22) 4일차](./note/2022-01-22.ipynb)
+    - 격리 포레스트(Isolation Forest)
+        - 비정상 행위(Anomaly Detection)를 탐지
+        - 데이터셋에서 기대 패턴(Expected Pattern)에 부합하지 않는 사건(Event)을 식별
+        - 특이점(Outlier)을 격리하기 쉽지만 정상 데이터 점(Normal Data Point)을 설명하는 것은 어려움
+        - 알고리즘에 비정상 데이터(Anormalous Data)에 관한 어떠한 정보도 주지 않음
+        - 오탐지(False Position)의 수가 상당히 발생할 수 있음
+            - 분류기를 미세하게 조정해야함
+        - 학습 코드
+            ```python
+            from sklearn.ensemble import IsolationForest
+            clf = IsolationForest()
+            clf.fit(X_train) # DataFrame 사용 가능
+            ```
+    - 랜덤 시드(Random Seed)
+        - 랜덤 시드 생성
+            ```python
+            np.random.RandomState(12)
+            ```
+            - 인스턴스화 후 사용함
+        - 랜덤 배열 생성
+            - 기본 사용법
+                ```python
+                rnd = np.random.RandomState(12)
+                rnd.randn(Row,Column)
+                ```
+                - Row x Column 사이즈의 랜덤 배열이 생성됨
+            - 최대값 최소값 지정
+                ```python
+                rnd = np.random.RandomState(12)
+                rnd.uniform(low=-5, high=5, size=(2,2))
+                ```
+                - low : 최소값
+                - high : 최대값
+                - size : 배열크기
+    - 넘파이(Numpy)
+        - 두 배열 합치기
+            ```python
+            np.r_[Array1, Array2]
+            ```
+            - 배열1 아래에 배열2가 연결됨
+    - plotly
+        - 산점도(Scatter) 그래프 출력
+            ```python
+            import plotly.graph_objects as go
+            fig = go.Figure()
+            fig.add_trace(
+                go.Scatter(
+                    x=X_train['x'],
+                    y=X_train['y'],
+                    mode='markers',
+                    marker=dict(
+                        color='color',
+                        line=dict(
+                            color='color',
+                            width=2
+                        )
+                    ),
+                    name='name'
+                )
+            )
+            fig.show()
+            ```
+            - 필요한 산점도 종류만큼 add_trace를 사용
+            - plotly docs에 더 효율적인 방식이 있음
+    - 표 형식 출력
+        - 소스 코드
+            ```python
+            from tabulate import tabulate
+            tabulate(
+                tabular_data=df,
+                headers=columns_name,
+                tablefmt='psql'
+            )
+            ```
+            - tabular_data : 데이터프레임
+            - headers : 열 이름
+            - tablefmt : 테이블포멧
+                - psql : PostgreSQL 테이블 포멧의 일종
+    - 추가 알아낸 개념
+        - 파이썬 연산자(Python Operator)
+            ```python
+            print(10+1)
+            print(10-1)
+            print(10+-1)
+            print(10-+-1)
+            '''
+            실행결과
+            11
+            9
+            9
+            11
+            '''
+            ```
 ---
