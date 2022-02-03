@@ -365,4 +365,35 @@
             11
             '''
             ```
+
+#
+- [(2022-01-22) 5일차](./note/2022-02-03.ipynb)
+    - TF-IDF
+        - Term-Frequency Inverse-Document-Frequency
+            - 텍스트를 숫자 정보로 변환하여 처리하는 기술
+            - 텍스트의 단어 빈도수를 기반으로 분석
+                - 텍스트 내의 Stop Word는 빈도수가 높지만 정보를 가지고 있지 않아 분석에 오도를 발생
+                    - Stop Word : the, a 같은 의미 없는 문법적 단어
+                - 토큰에 가중치 weight를 부여하는 방식 사용
+                    - 토큰(Token) : 텍스트를 처리하는 단위
+                    - Stop Word를 제거할 수 있음
+            - 이벤트 로그나 대화 내용 등등의 데이터에 활용 가능
+        - 소스 코드
+            - 텍스트 파일 읽기
+                ```python
+                with open('./data/anonops_short.txt', encoding='utf8') as f:
+                    anonops_chat_logs = f.readlines()
+                ```
+            - 텍스트를 텍스트 토큰으로 변환
+                ```python
+                from sklearn.feature_extraction.text import HashingVectorizer
+                my_vector = HashingVectorizer(input='content', ngram_range=(1,2))
+                X_train_counts = my_vector.fit_transform(anonops_chat_logs,)
+                ```
+            - TF-IDF 변환
+                ```python
+                from sklearn.feature_extraction.text import TfidfTransformer
+                tf_transformer = TfidfTransformer(use_idf=True,).fit(X_train_counts)
+                X_train_tf = tf_transformer.transform(X_train_counts)
+                ```
 ---
